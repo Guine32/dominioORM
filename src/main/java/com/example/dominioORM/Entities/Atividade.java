@@ -7,7 +7,9 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -20,9 +22,13 @@ public class Atividade {
     private String nome;
     private String descricao;
     private Double preco;
-    
+
     @ManyToMany(mappedBy = "atividades")
     private Set<Participante> participantes = new HashSet<>();
+
+    @ManyToOne
+    @JoinColumn(name = "categoria_id")
+    private Categoria categoria;
 
     public Atividade() {
     }
@@ -66,8 +72,8 @@ public class Atividade {
         this.preco = preco;
     }
 
-     public Set<Participante> getParticipantes() {
-        return participantes;
+    public Set<Participante> getParticipantes() {
+        return Set.copyOf(participantes);
     }
 
     @Override
@@ -94,9 +100,5 @@ public class Atividade {
             return false;
         return true;
     }
-
-   
-
-    
 
 }
