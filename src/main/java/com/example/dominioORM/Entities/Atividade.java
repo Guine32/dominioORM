@@ -1,9 +1,13 @@
 package com.example.dominioORM.Entities;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -17,6 +21,9 @@ public class Atividade {
     private String descricao;
     private Double preco;
     
+    @ManyToMany(mappedBy = "atividades")
+    private Set<Participante> participantes = new HashSet<>();
+
     public Atividade() {
     }
 
@@ -59,6 +66,10 @@ public class Atividade {
         this.preco = preco;
     }
 
+     public Set<Participante> getParticipantes() {
+        return participantes;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -83,6 +94,8 @@ public class Atividade {
             return false;
         return true;
     }
+
+   
 
     
 
